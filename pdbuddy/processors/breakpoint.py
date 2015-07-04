@@ -12,7 +12,7 @@ class BreakpointProcessor(object):
         self.matcher = matcher
 
     def __call__(self, *args):
-        if self.matcher.match(*args):
+        if self.matcher(*args):
             # Importing ipdb has some side-effects so do it when it is actually needed
             try:
                 import ipdb as db

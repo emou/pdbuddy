@@ -20,5 +20,5 @@ class TraceProcessor(object):
         self.formatter = formatter
 
     def __call__(self, *args):
-        if self.matcher.match(*args):
+        if self.matcher(*args):
             return self.formatter(*args)

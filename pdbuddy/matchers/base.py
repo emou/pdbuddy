@@ -1,6 +1,6 @@
 class BaseMatcher(object):
     """The base class for pdbuddy matchers."""
 
-    def match(self, frame, event, arg):
+    def __call__(self, frame, event, arg):
         raise NotImplementedError(
             'Subclasses need to implement the match method')

@@ -76,6 +76,25 @@ Tracer([
 foo()
 ```
 
+# Running the tests
+
+```bash
+$ source env/bin/activate
+$ ./bootstrap-tests.sh
+```
+
+Run the tests:
+
+```
+$ py.test tests
+```
+
+Make sure you're running `env/bin/py.test`.
+
+```
+$ which py.test
+```
+
 # TODO
 
 Random items in [TODO.md](TODO.md).

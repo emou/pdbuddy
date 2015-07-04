@@ -1,3 +1,4 @@
 /env
 *.pyc
+/pdbuddy.egg-info/
 __pycache__

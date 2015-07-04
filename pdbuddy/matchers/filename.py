@@ -12,7 +12,7 @@ class FilenameMatcher(BaseMatcher):
         self.filename_regex = re.compile(filename_regex)
         self.firstlineno = firstlineno
 
-    def match(self, frame, event, arg):
+    def __call__(self, frame, event, arg):
         if event != 'call':
             return
 
