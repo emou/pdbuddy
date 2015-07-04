@@ -28,14 +28,14 @@ import json
 from pdbuddy import Tracer
 from pdbuddy.formatters import SimpleFormatter
 from pdbuddy.processors import TraceProcessor
-from pdbuddy.matchers import FilenameMatcher
+from pdbuddy.matchers import CallMatcher, FilenameMatcher
 
 
 def foo():
     return json.loads('{}')
 
 Tracer([
-    TraceProcessor(FilenameMatcher('.*json.*'),
+    TraceProcessor(CallMatcher() & FilenameMatcher('.*json.*'),
                    SimpleFormatter())
 ]).install()
 
@@ -63,14 +63,14 @@ import json
 
 from pdbuddy import Tracer
 from pdbuddy.processors import BreakpointProcessor
-from pdbuddy.matchers import FilenameMatcher
+from pdbuddy.matchers import CallMatcher, FilenameMatcher
 
 
 def foo():
     json.loads('{}')
 
 Tracer([
-  BreakpointProcessor(FilenameMatcher('.*json.*', 293))
+  BreakpointProcessor(CallMatcher() & FilenameMatcher('.*json.*', 293))
 ]).install()
 
 foo()

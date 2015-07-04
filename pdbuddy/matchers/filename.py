@@ -13,9 +13,6 @@ class FilenameMatcher(BaseMatcher):
         self.firstlineno = firstlineno
 
     def __call__(self, frame, event, arg):
-        if event != 'call':
-            return
-
         f_code = frame.f_code
         fname = f_code.co_filename
         firstlineno = f_code.co_firstlineno

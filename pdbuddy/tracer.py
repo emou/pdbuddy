@@ -29,3 +29,4 @@ class Tracer(object):
             result = processor(frame, event, arg)
             if result is not None:
                 self.printer(result)
+        return self
