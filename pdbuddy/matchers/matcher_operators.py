@@ -20,3 +20,12 @@ class OrMatcher(BinaryMatcher):
 
     def __call__(self, *args):
         return self.matcher1(*args) or self.matcher2(*args)
+
+
+class InvertMatcher(BaseMatcher):
+
+    def __init__(self, matcher):
+        self.matcher = matcher
+
+    def __call__(self, *args):
+        return not self.matcher(*args)

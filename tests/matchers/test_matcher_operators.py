@@ -4,7 +4,7 @@ import pytest
 from doubles import allow, InstanceDouble
 
 from pdbuddy.matchers import BaseMatcher
-from pdbuddy.matchers.matcher_operators import AndMatcher, BinaryMatcher, OrMatcher
+from pdbuddy.matchers.matcher_operators import AndMatcher, BinaryMatcher, InvertMatcher, OrMatcher
 
 
 def test_init_accepts_two_matchers():
@@ -98,3 +98,10 @@ def test_and_operator():
     assert isinstance(or_matcher, AndMatcher)
     assert or_matcher.matcher1 is m1
     assert or_matcher.matcher2 is m2
+
+
+def test_invert_operator():
+    matcher = BaseMatcher()
+    invert_matcher = ~matcher
+    assert isinstance(invert_matcher, InvertMatcher)
+    assert invert_matcher.matcher is matcher

@@ -15,3 +15,7 @@ class BaseMatcher(object):
     def __and__(self, other):
         from pdbuddy.matchers.matcher_operators import AndMatcher
         return AndMatcher(self, other)
+
+    def __invert__(self):
+        from pdbuddy.matchers.matcher_operators import InvertMatcher
+        return InvertMatcher(self)
