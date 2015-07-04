@@ -19,7 +19,8 @@ tracing callback. Full support is being researched and planned for implementatio
 
 ## Tracing
 
-The following code will output all function calls in filenames matching the pattern `.*threading.py.*`.
+The following code will output all function calls to functions defined in files with filename
+matching the pattern `.*json.*`.
 
 ```python
 import json
@@ -29,12 +30,16 @@ from pdbuddy.formatters import SimpleFormatter
 from pdbuddy.processors import TraceProcessor
 from pdbuddy.matchers import FilenameMatcher
 
+
+def foo():
+    return json.loads('{}')
+
 Tracer([
     TraceProcessor(FilenameMatcher('.*json.*'),
                    SimpleFormatter())
 ]).install()
 
-json.loads('{}')
+foo()
 ```
 
 The output of the above program will be similar to this:
@@ -50,8 +55,8 @@ The output of the above program will be similar to this:
 This is very rudimentary and only supports setting one breakpoint as the debugger hijacks our
 tracing function. A more complete implementation is planned.
 
-The following code will set a breakpoint the first time code execution comes to a function defined
-on line 293 in a file matching `json`.
+The following code will set a breakpoint the first time a function defined on line 293 in a file
+matching `.*json.*` is called.
 
 ```python
 import json
@@ -60,11 +65,15 @@ from pdbuddy import Tracer
 from pdbuddy.processors import BreakpointProcessor
 from pdbuddy.matchers import FilenameMatcher
 
+
+def foo():
+    json.loads('{}')
+
 Tracer([
   BreakpointProcessor(FilenameMatcher('.*json.*', 293))
 ]).install()
 
-json.loads('{}')
+foo()
 ```
 
 # TODO

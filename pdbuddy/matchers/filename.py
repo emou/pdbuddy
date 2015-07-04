@@ -21,7 +21,7 @@ class FilenameMatcher(BaseMatcher):
         firstlineno = f_code.co_firstlineno
         if not self._match_filename(fname):
             return False
-        return firstlineno is None or firstlineno == self.firstlineno
+        return self.firstlineno is None or firstlineno == self.firstlineno
 
     def _match_filename(self, fname):
         return self.filename_regex.match(fname)
