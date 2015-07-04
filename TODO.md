@@ -1,10 +1,18 @@
 - Use issue tracker instead of this file
 
-- Tests
-
 - Higher-level interface instead of the OO matchers/processors/etc.
   * some form of concise DSL
-  * maybe config file
+  * maybe config file?
+  * query language?
+
+- Think about generalizing the matchers
+  * Instead of classes, define the different values that can be matched and checks you can perform
+    on them. Something like:
+
+    * value: line_number, checks: > < == etc.
+    * value: filename, checks: regex (already have this)
+    * value: caller.filename, checks: regex
+    * value: locals.foo, checks: ???
 
 - More matchers
   * line number matcher
