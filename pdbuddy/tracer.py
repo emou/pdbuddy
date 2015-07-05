@@ -18,10 +18,24 @@ class Tracer(object):
         if printer is None:
             printer = StdoutPrinter()
         self.printer = printer
+        self._old_trace_func = None
+
+    def __enter__(self):
+        self.install()
+        return None
+
+    def __exit__(self, exc_type, exc_value, traceback):
+        self.uninstall()
+        return None
 
     def install(self):
         """Install the grepper as the tracing function of the process."""
+        self._old_trace_func = sys.gettrace()
         sys.settrace(self)
+
+    def uninstall(self):
+        """Stop tracing and remove previous tracer function."""
+        sys.settrace(self._old_trace_func)
 
     def __call__(self, frame, event, arg):
         """Perform the actual call tracing."""

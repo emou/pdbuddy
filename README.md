@@ -34,12 +34,12 @@ from pdbuddy.matchers import CallMatcher, FilenameMatcher
 def foo():
     return json.loads('{}')
 
-Tracer([
+with Tracer([
     TraceProcessor(CallMatcher() & FilenameMatcher('.*json.*'),
                    SimpleFormatter())
-]).install()
+]):
+    foo()
 
-foo()
 ```
 
 The output of the above program will be similar to this:
@@ -69,11 +69,10 @@ from pdbuddy.matchers import CallMatcher, FilenameMatcher
 def foo():
     json.loads('{}')
 
-Tracer([
+with Tracer([
   BreakpointProcessor(CallMatcher() & FilenameMatcher('.*json.*', 293))
-]).install()
-
-foo()
+]):
+    foo()
 ```
 
 # Running the tests
