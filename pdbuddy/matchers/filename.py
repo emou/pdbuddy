@@ -12,10 +12,9 @@ class FilenameMatcher(BaseMatcher):
         self.filename_regex = re.compile(filename_regex)
         self.firstlineno = firstlineno
 
-    def __call__(self, frame, event, arg):
-        f_code = frame.f_code
-        fname = f_code.co_filename
-        firstlineno = f_code.co_firstlineno
+    def __call__(self, context):
+        fname = context.definition_filename
+        firstlineno = context.definition_line
         if not self._match_filename(fname):
             return False
         return self.firstlineno is None or firstlineno == self.firstlineno

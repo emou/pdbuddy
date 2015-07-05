@@ -12,14 +12,14 @@ class BinaryMatcher(BaseMatcher):
 
 class AndMatcher(BinaryMatcher):
 
-    def __call__(self, *args):
-        return self.matcher1(*args) and self.matcher2(*args)
+    def __call__(self, context):
+        return self.matcher1(context) and self.matcher2(context)
 
 
 class OrMatcher(BinaryMatcher):
 
-    def __call__(self, *args):
-        return self.matcher1(*args) or self.matcher2(*args)
+    def __call__(self, context):
+        return self.matcher1(context) or self.matcher2(context)
 
 
 class InvertMatcher(BaseMatcher):
@@ -27,5 +27,5 @@ class InvertMatcher(BaseMatcher):
     def __init__(self, matcher):
         self.matcher = matcher
 
-    def __call__(self, *args):
-        return not self.matcher(*args)
+    def __call__(self, context):
+        return not self.matcher(context)

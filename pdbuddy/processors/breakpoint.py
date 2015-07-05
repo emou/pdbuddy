@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+from pdbuddy.trace_context import TraceContext
+
 
 class BreakpointProcessor(object):
     """Adds a breakpoint when a matcher matches an trace event.
@@ -8,11 +10,15 @@ class BreakpointProcessor(object):
     overrides our `sys.settrace` function.
     """
 
+    _ctx_class = TraceContext
+
     def __init__(self, matcher):
         self.matcher = matcher
 
-    def __call__(self, *args):
-        if self.matcher(*args):
+    def __call__(self, frame, event, arg):
+        context = self._ctx_class(frame, event, arg)
+
+        if self.matcher(context):
             # Importing ipdb has some side-effects so do it when it is actually needed
             try:
                 import ipdb as db

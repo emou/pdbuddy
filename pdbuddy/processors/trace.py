@@ -1,7 +1,8 @@
 from __future__ import absolute_import
 
-from pdbuddy.matchers import AnyMatcher
 from pdbuddy.formatters import SimpleFormatter
+from pdbuddy.matchers import AnyMatcher
+from pdbuddy.trace_context import TraceContext
 
 
 class TraceProcessor(object):
@@ -9,6 +10,8 @@ class TraceProcessor(object):
 
     Generally a tracer that prints all matching events as per `sys.settrace`.
     """
+
+    _ctx_class = TraceContext
 
     def __init__(self, matcher=None, formatter=None):
         if matcher is None:
@@ -19,6 +22,7 @@ class TraceProcessor(object):
             formatter = SimpleFormatter()
         self.formatter = formatter
 
-    def __call__(self, *args):
-        if self.matcher(*args):
-            return self.formatter(*args)
+    def __call__(self, frame, event, arg):
+        context = self._ctx_class(frame, event, arg)
+        if self.matcher(context):
+            return self.formatter(frame, event, arg)

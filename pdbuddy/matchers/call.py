@@ -5,5 +5,5 @@ from pdbuddy.matchers.base import BaseMatcher
 
 class CallMatcher(BaseMatcher):
 
-    def __call__(self, frame, event, arg):
-        return event == 'call'
+    def __call__(self, context):
+        return context.is_call()

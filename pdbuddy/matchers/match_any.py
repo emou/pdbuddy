@@ -6,5 +6,5 @@ from pdbuddy.matchers.base import BaseMatcher
 class AnyMatcher(BaseMatcher):
     """A Matcher that matches any trace"""
 
-    def __call__(self, frame, event, arg):
+    def __call__(self, context):
         return True

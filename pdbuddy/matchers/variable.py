@@ -9,9 +9,10 @@ class VariableMatcher(BaseMatcher):
         self.variable_name = variable_name
         self.match_func = match_func
 
-    def __call__(self, frame, event, arg):
-        if self.variable_name in frame.f_locals:
-            return self.match_func(frame.f_locals[self.variable_name])
+    def __call__(self, context):
+        if context.has_local_variable(self.variable_name):
+            return self.match_func(context.get_local_variable(
+                self.variable_name))
         return False
 
 

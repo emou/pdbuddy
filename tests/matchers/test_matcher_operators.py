@@ -5,6 +5,7 @@ from doubles import allow, InstanceDouble
 
 from pdbuddy.matchers import BaseMatcher
 from pdbuddy.matchers.matcher_operators import AndMatcher, BinaryMatcher, InvertMatcher, OrMatcher
+from pdbuddy.trace_context import TraceContext
 
 
 def test_init_accepts_two_matchers():
@@ -16,7 +17,8 @@ def test_init_accepts_two_matchers():
 
 def test_raises_not_implemented_error():
     with pytest.raises(NotImplementedError):
-        assert BinaryMatcher(object(), object())(object(), object(), object())
+        assert BinaryMatcher(object(), object())(
+            TraceContext(object(), object(), object()))
 
 
 def const_matcher(val):
@@ -36,48 +38,48 @@ def false_matcher():
 
 
 def test_sanity(true_matcher, false_matcher):
-    assert true_matcher(object(), object(), object()) is True
-    assert false_matcher(object(), object(), object()) is False
+    assert true_matcher(TraceContext(object(), object(), object())) is True
+    assert false_matcher(TraceContext(object(), object(), object())) is False
 
 
 def test_or_matcher_true_false(true_matcher, false_matcher):
     assert OrMatcher(true_matcher, false_matcher)(
-        object(), object(), object()) is True
+        TraceContext(object(), object(), object())) is True
 
 
 def test_or_matcher_false_true(true_matcher, false_matcher):
     assert OrMatcher(false_matcher, true_matcher)(
-        object(), object(), object()) is True
+        TraceContext(object(), object(), object())) is True
 
 
 def test_or_matcher_false_false(false_matcher):
     assert OrMatcher(false_matcher, false_matcher)(
-        object(), object(), object()) is False
+        TraceContext(object(), object(), object())) is False
 
 
 def test_or_matcher_true_true(true_matcher):
     assert OrMatcher(true_matcher, true_matcher)(
-        object(), object(), object()) is True
+        TraceContext(object(), object(), object())) is True
 
 
 def test_and_matcher_true_false(true_matcher, false_matcher):
     assert AndMatcher(true_matcher, false_matcher)(
-        object(), object(), object()) is False
+        TraceContext(object(), object(), object())) is False
 
 
 def test_and_matcher_false_true(true_matcher, false_matcher):
     assert AndMatcher(false_matcher, true_matcher)(
-        object(), object(), object()) is False
+        TraceContext(object(), object(), object())) is False
 
 
 def test_and_matcher_false_false(false_matcher):
     assert AndMatcher(false_matcher, false_matcher)(
-        object(), object(), object()) is False
+        TraceContext(object(), object(), object())) is False
 
 
 def test_and_matcher_true_true(true_matcher):
     assert AndMatcher(true_matcher, true_matcher)(
-        object(), object(), object()) is True
+        TraceContext(object(), object(), object())) is True
 
 
 def test_or_operator():
